@@ -1,6 +1,6 @@
 # teachR
 
-A work-in-progress curriculum for teaching R (focusing on the tidyverse)
+A work-in-progress curriculum of videos, articles, and exercises for teaching R (focusing on the tidyverse).
 
 ## Getting started
 
