@@ -38,4 +38,6 @@ A work-in-progress curriculum of videos, articles, and exercises for teaching da
 
 1. [Video: Map functions in purrr](https://www.youtube.com/watch?v=A8UaL47UXYE&list=PLLxj8fULvXwGOf8uHlL4Tr62oXSB5k_in)
 
+1. [Video: Introducing the purrrplus package](https://www.youtube.com/watch?v=7QWzuBiHDk8&list=PLLxj8fULvXwGOf8uHlL4Tr62oXSB5k_in)
+
 ## Workflow, projects, and github
