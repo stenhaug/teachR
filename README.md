@@ -12,7 +12,7 @@ A work-in-progress curriculum of videos, articles, and exercises for teaching da
 
 1. [Video: The 5 verbs of dplyr](https://www.youtube.com/watch?v=sVISY_27znA&index=8&list=PLLxj8fULvXwGOf8uHlL4Tr62oXSB5k_in)
 
-1. [Article: The 5 verbs of dplyr](https://github.com/stenhaug/teachR/blob/master/content/the-5-verbs-of-dplyr/the-5-verbs-of-dplyr-article.md)
+1. [Article: The 5 verbs of dplyr](https://www.benstenhaug.com/projects/5_verbs_article/)
 
 1. [Exercise: The 5 verbs of dplyr](https://github.com/stenhaug/teachR/blob/master/content/the-5-verbs-of-dplyr/the-5-verbs-of-dplyr-exercise.md)
 
