@@ -1,9 +1,13 @@
 ---
 title: Article - The 5 verbs of dplyr
-author: Ben
+author: Ben Stenhaug
 output: 
-  github_document:
+  html_document:
     toc: true
+    toc_depth: 1
+    toc_float: true
+    theme: spacelab
+    highlight: tango
 ---
 
 # Getting started
@@ -212,7 +216,7 @@ dataframe %>%
    group_by(a)
 ```
 
-![](/images/group_by.png)
+![](images/group_by.png)
 
 _Sourced from [R Bootcamp at Berkeley](https://github.com/berkeley-scf/r-bootcamp-2017)_
 
