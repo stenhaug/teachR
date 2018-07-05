@@ -6,8 +6,8 @@ output:
     toc: true
     toc_depth: 1
     toc_float: true
-    theme: spacelab
-    highlight: tango
+    theme: default
+    highlight: default
 ---
 
 # Getting started
