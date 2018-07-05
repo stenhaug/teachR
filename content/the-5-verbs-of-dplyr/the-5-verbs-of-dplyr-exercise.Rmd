@@ -1,9 +1,13 @@
 ---
 title: Exercise - The 5 verbs of dplyr
-author: Ben
+author: Ben Stenhaug
 output: 
-  github_document:
+  html_document:
     toc: true
+    toc_depth: 1
+    toc_float: true
+    theme: spacelab
+    highlight: tango
 ---
 
 # Getting started
