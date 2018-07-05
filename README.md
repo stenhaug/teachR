@@ -16,7 +16,7 @@ A work-in-progress curriculum of videos, articles, and exercises for teaching da
 
 1. [Exercise: The 5 verbs of dplyr](https://github.com/stenhaug/teachR/blob/master/content/the-5-verbs-of-dplyr/the-5-verbs-of-dplyr-exercise.md)
 
-1. [Exercise Solutions: The 5 verbs of dplyr](https://github.com/stenhaug/teachR/blob/master/content/the-5-verbs-of-dplyr/the-5-verbs-of-dplyr-solutions.md)
+1. [Exercise Solutions: The 5 verbs of dplyr](content/the-5-verbs-of-dplyr/the-5-verbs-of-dplyr-solutions.md)
 
 1. [Video: Understanding group by](https://www.youtube.com/watch?v=6xbGZDUu5W4&list=PLLxj8fULvXwGOf8uHlL4Tr62oXSB5k_in)
 
