@@ -1484,12 +1484,15 @@ div.tocify {
 <p><em>Note: If you haven’t yet installed the tidyverse, you’ll first have to run the code install.packages(“tidyverse”).</em></p>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <p>Here’s the dataframe that we’ll analyze in this exercise:</p>
-<pre class="r"><code>scores &lt;- data_frame(name = c(&quot;mike&quot;, &quot;carol&quot;, &quot;greg&quot;, &quot;marcia&quot;, &quot;peter&quot;, &quot;jan&quot;, &quot;bobby&quot;, &quot;cindy&quot;, &quot;alice&quot;),
-           school = c(&quot;south&quot;, &quot;south&quot;, &quot;south&quot;, &quot;south&quot;, &quot;north&quot;, &quot;north&quot;, &quot;north&quot;, &quot;south&quot;, &quot;south&quot;),
-           teacher = c(&quot;johnson&quot;, &quot;johnson&quot;, &quot;johnson&quot;, &quot;johnson&quot;,  &quot;smith&quot;, &quot;smith&quot;, &quot;smith&quot;, &quot;perry&quot;, &quot;perry&quot;),
-           gender = c(&quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;),
-           math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
-           reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)) </code></pre>
+<pre class="r"><code>scores &lt;- 
+  data_frame(
+  name = c(&quot;mike&quot;, &quot;carol&quot;, &quot;greg&quot;, &quot;marcia&quot;, &quot;peter&quot;, &quot;jan&quot;, &quot;bobby&quot;, &quot;cindy&quot;, &quot;alice&quot;),
+  school = c(&quot;south&quot;, &quot;south&quot;, &quot;south&quot;, &quot;south&quot;, &quot;north&quot;, &quot;north&quot;, &quot;north&quot;, &quot;south&quot;, &quot;south&quot;),
+  teacher = c(&quot;johnson&quot;, &quot;johnson&quot;, &quot;johnson&quot;, &quot;johnson&quot;,  &quot;smith&quot;, &quot;smith&quot;, &quot;smith&quot;, &quot;perry&quot;, &quot;perry&quot;),
+  gender = c(&quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;),
+  math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
+  reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)
+  )</code></pre>
 <p>Let’s first take a look at it:</p>
 <pre class="r"><code>scores</code></pre>
 <pre><code>## # A tibble: 9 x 6
@@ -1816,14 +1819,14 @@ scores %&gt;%
   group_by(teacher) %&gt;% 
   filter(max(math_score) == 5)</code></pre>
 <pre><code>## # A tibble: 5 x 6
-## # Groups:   teacher [3]
+## # Groups:   teacher [2]
 ##   name  school teacher gender math_score reading_score
 ##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
-## 1 cindy south  perry   female          4             5
-## 2 alice south  perry   female          5             4
-## 3 peter north  smith   male            3             5
-## 4 jan   north  smith   female          4             4
-## 5 bobby north  smith   male            5             1</code></pre>
+## 1 peter north  smith   male            3             5
+## 2 jan   north  smith   female          4             4
+## 3 bobby north  smith   male            5             1
+## 4 cindy south  perry   female          4             5
+## 5 alice south  perry   female          5             4</code></pre>
 </div>
 <div id="q1-3" class="section level2">
 <h2>Q1</h2>
@@ -1832,7 +1835,7 @@ scores %&gt;%
   group_by(gender) %&gt;% 
   filter(mean(math_score) == 4)</code></pre>
 <pre><code>## # A tibble: 5 x 6
-## # Groups:   gender [2]
+## # Groups:   gender [1]
 ##   name   school teacher gender math_score reading_score
 ##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
 ## 1 carol  south  johnson female          3             5
@@ -1848,7 +1851,7 @@ scores %&gt;%
   group_by(teacher) %&gt;% 
   filter(n() &gt;= 3)</code></pre>
 <pre><code>## # A tibble: 7 x 6
-## # Groups:   teacher [3]
+## # Groups:   teacher [2]
 ##   name   school teacher gender math_score reading_score
 ##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
 ## 1 mike   south  johnson male            4             1
@@ -2046,8 +2049,10 @@ scores %&gt;%
 <h2>Q2</h2>
 <p><strong>Question:</strong> Use the summarize command to find the median for both math scores and reading scores.</p>
 <pre class="r"><code>scores %&gt;% 
-  summarize(math_score_median = median(math_score),
-            reading_score_median = median(reading_score))</code></pre>
+  summarize(
+    math_score_median = median(math_score),
+    reading_score_median = median(reading_score)
+  )</code></pre>
 <pre><code>## # A tibble: 1 x 2
 ##   math_score_median reading_score_median
 ##               &lt;dbl&gt;                &lt;dbl&gt;
@@ -2057,11 +2062,12 @@ scores %&gt;%
 <h2>Q3</h2>
 <p><strong>Question:</strong> Look closely at the following code. Why is it throwing an error? How can Rstudio help you see this error?</p>
 <pre class="r"><code>scores %&gt;% 
-  summarize(math_score_max = max(math_score),
-            reading_score_min = min(reading_score)</code></pre>
-<pre><code>## Error: &lt;text&gt;:4:0: unexpected end of input
-## 2:   summarize(math_score_max = max(math_score),
-## 3:             reading_score_min = min(reading_score)
+  summarize(
+    math_score_max = max(math_score),
+    reading_score_min = min(reading_score)</code></pre>
+<pre><code>## Error: &lt;text&gt;:5:0: unexpected end of input
+## 3:     math_score_max = max(math_score),
+## 4:     reading_score_min = min(reading_score)
 ##   ^</code></pre>
 <p><strong>Answer:</strong> We need another “)” at the end of the code. The first “)” is for the min function but we also need a “)” to end the summarize function. Rstudio helps because if you go to the right of a paranthese, it highlights the corresponding closing paranthese.</p>
 </div>
@@ -2131,9 +2137,11 @@ scores %&gt;%
 <p><strong>Question:</strong> Create a data frame with the mean and median reading score by gender, as well as the number of students of that gender.</p>
 <pre class="r"><code>scores %&gt;% 
   group_by(gender) %&gt;% 
-  summarize(mean_reading_score = mean(reading_score),
-            median_reading_score = median(reading_score),
-            count = n())</code></pre>
+  summarize(
+    mean_reading_score = mean(reading_score),
+    median_reading_score = median(reading_score),
+    count = n()
+  )</code></pre>
 <pre><code>## # A tibble: 2 x 4
 ##   gender mean_reading_score median_reading_score count
 ##   &lt;chr&gt;               &lt;dbl&gt;                &lt;dbl&gt; &lt;int&gt;
@@ -2218,7 +2226,7 @@ scores %&gt;%
   summarize(max_math_score = max(math_score)) %&gt;% 
   filter(school == &quot;south&quot;)</code></pre>
 <pre><code>## # A tibble: 2 x 3
-## # Groups:   school [2]
+## # Groups:   school [1]
 ##   school teacher max_math_score
 ##   &lt;chr&gt;  &lt;chr&gt;            &lt;dbl&gt;
 ## 1 south  johnson              4
