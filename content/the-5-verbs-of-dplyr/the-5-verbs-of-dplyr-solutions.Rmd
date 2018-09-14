@@ -23,12 +23,15 @@ library(tidyverse)
 Here's the dataframe that we'll analyze in this exercise:
 
 ```{r}
-scores <- data_frame(name = c("mike", "carol", "greg", "marcia", "peter", "jan", "bobby", "cindy", "alice"),
-           school = c("south", "south", "south", "south", "north", "north", "north", "south", "south"),
-           teacher = c("johnson", "johnson", "johnson", "johnson",  "smith", "smith", "smith", "perry", "perry"),
-           gender = c("male", "female", "male", "female", "male", "female", "male", "female", "female"),
-           math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
-           reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)) 
+scores <- 
+  data_frame(
+  name = c("mike", "carol", "greg", "marcia", "peter", "jan", "bobby", "cindy", "alice"),
+  school = c("south", "south", "south", "south", "north", "north", "north", "south", "south"),
+  teacher = c("johnson", "johnson", "johnson", "johnson",  "smith", "smith", "smith", "perry", "perry"),
+  gender = c("male", "female", "male", "female", "male", "female", "male", "female", "female"),
+  math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
+  reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)
+  )
 ```
 
 Let's first take a look at it:
@@ -368,8 +371,10 @@ scores %>%
 
 ```{r}
 scores %>% 
-  summarize(math_score_median = median(math_score),
-            reading_score_median = median(reading_score))
+  summarize(
+    math_score_median = median(math_score),
+    reading_score_median = median(reading_score)
+  )
 ```
 
 ## Q3
@@ -378,8 +383,9 @@ scores %>%
 
 ```{r error = TRUE}
 scores %>% 
-  summarize(math_score_max = max(math_score),
-            reading_score_min = min(reading_score)
+  summarize(
+    math_score_max = max(math_score),
+    reading_score_min = min(reading_score)
 ```
 
 **Answer:** We need another ")" at the end of the code. The first ")" is for the min function but we also need a ")" to end the summarize function. Rstudio helps because if you go to the right of a paranthese, it highlights the corresponding closing paranthese. 
@@ -437,9 +443,11 @@ scores %>%
 ```{r}
 scores %>% 
   group_by(gender) %>% 
-  summarize(mean_reading_score = mean(reading_score),
-            median_reading_score = median(reading_score),
-            count = n())
+  summarize(
+    mean_reading_score = mean(reading_score),
+    median_reading_score = median(reading_score),
+    count = n()
+  )
 ```
 
 # Combining verbs

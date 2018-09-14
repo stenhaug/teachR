@@ -29,10 +29,13 @@ This article will cover the five verbs of dplyr: select, filter, arrange, mutate
 Before we walk through each command, let's make a data frame to play with.
 
 ```{r}
-hamsters <- data_frame(name = c("Megan", "Amy", "Jen", "Karl", "Jeremy"),
-			     gender = c("female", "female", "female", "male", "male"),
-			     hamsters = c(5, 7, 6, 2, 1),
-			     hamster_cages = c(2, 1, 3, 3, 4))
+hamsters <- 
+    data_frame(
+        name = c("Megan", "Amy", "Jen", "Karl", "Jeremy"),
+		gender = c("female", "female", "female", "male", "male"),
+		hamsters = c(5, 7, 6, 2, 1),
+		hamster_cages = c(2, 1, 3, 3, 4)
+	)
 ```
 
 Don't worry too much about the above code, but you might stop and inspect it. Notice that

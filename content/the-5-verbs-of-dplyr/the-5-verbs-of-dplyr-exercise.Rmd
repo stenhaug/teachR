@@ -23,12 +23,15 @@ library(tidyverse)
 Here's the dataframe that we'll analyze in this exercise:
 
 ```{r}
-scores <- data_frame(name = c("mike", "carol", "greg", "marcia", "peter", "jan", "bobby", "cindy", "alice"),
-           school = c("south", "south", "south", "south", "north", "north", "north", "south", "south"),
-           teacher = c("johnson", "johnson", "johnson", "johnson",  "smith", "smith", "smith", "perry", "perry"),
-           gender = c("male", "female", "male", "female", "male", "female", "male", "female", "female"),
-           math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
-           reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)) 
+scores <- 
+  data_frame(
+    name = c("mike", "carol", "greg", "marcia", "peter", "jan", "bobby", "cindy", "alice"),
+    school = c("south", "south", "south", "south", "north", "north", "north", "south", "south"),
+    teacher = c("johnson", "johnson", "johnson", "johnson",  "smith", "smith", "smith", "perry", "perry"),
+    gender = c("male", "female", "male", "female", "male", "female", "male", "female", "female"),
+    math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
+    reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)
+  )
 ```
 
 Let's first take a look at it:
@@ -178,7 +181,6 @@ scores %>%
   filter(school = "south")
 
 # fix it! 
-
 
 ```
 
