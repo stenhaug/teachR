@@ -1,4 +1,4 @@
-# Getting started
+# Getting started 
 
 1. [Video: Getting oriented in Rstudio](https://www.youtube.com/watch?v=lTTJPRwnONE&list=PLLxj8fULvXwGOf8uHlL4Tr62oXSB5k_in&index=2)
 
