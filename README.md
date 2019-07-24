@@ -18,7 +18,7 @@
 
 # Visualization
 
-1. (Work in progress) 
+1. [Article: Just enough ggplot](content/just-enough-ggplot.html)
 
 # Importing
 
