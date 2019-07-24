@@ -24,11 +24,11 @@ Here's the dataframe that we'll analyze in this exercise:
 
 ```{r}
 scores <- 
-  data_frame(
+  tibble(
     name = c("mike", "carol", "greg", "marcia", "peter", "jan", "bobby", "cindy", "alice"),
     school = c("south", "south", "south", "south", "north", "north", "north", "south", "south"),
     teacher = c("johnson", "johnson", "johnson", "johnson",  "smith", "smith", "smith", "perry", "perry"),
-    gender = c("male", "female", "male", "female", "male", "female", "male", "female", "female"),
+    sex = c("male", "female", "male", "female", "male", "female", "male", "female", "female"),
     math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
     reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)
   )
@@ -59,7 +59,9 @@ In this exercise we'll typically just print the results and not save them, but i
 
 Now we can get to the exercise. Most sections will begin with an example for you to look at. When questions require a written answer, there will be an "Answer" line for you to complete.
 
-# Arrange
+# Part 1: Arrange
+
+___
 
 ## Example
 
@@ -82,7 +84,7 @@ scores %>%
 
 ## Q2
 
-**Question:** Sort the data by gender so females show up first. Which gender appears to have better reading scores?   
+**Question:** Sort the data by sex so females show up first. Which sex appears to have better reading scores?   
 
 ```{r}
 
@@ -92,13 +94,15 @@ scores %>%
 
 ## Q3
 
-**Question:** Sort the data by school, then teacher, then gender, then math_score, and finally by reading_score. 
+**Question:** Sort the data by school, then teacher, then sex, then math_score, and finally by reading_score. 
 
 ```{r}
 
 ```
 
-# Select
+# Part 2: Select
+
+___
 
 ## Example
 
@@ -111,7 +115,7 @@ scores %>%
 
 ## Q1 
 
-**Question:** Select all of the columns except the gender column.  
+**Question:** Select all of the columns except the sex column.  
 
 ```{r}
 
@@ -127,13 +131,15 @@ scores %>%
 
 ## Q3 
 
-**Question:** Keep all of the columns but rearrange them so gender is the first column.
+**Question:** Keep all of the columns but rearrange them so sex is the first column.
 
 ```{r}
 
 ```
 
-# Filter
+# Part 3: Filter
+
+___
 
 ## Example
 
@@ -142,11 +148,11 @@ scores %>%
 ```{r}
 # Option 1
 scores %>% 
-  filter(gender == "male" & school == "south")
+  filter(sex == "male" & school == "south")
 
 # Option 2
 scores %>% 
-  filter(gender == "male", school == "south")
+  filter(sex == "male", school == "south")
 ```
 
 ## Q1
@@ -181,7 +187,6 @@ scores %>%
   filter(school = "south")
 
 # fix it! 
-
 ```
 
 **Answer:** 
@@ -210,7 +215,9 @@ scores %>%
 
 ```
 
-# Filter with groups
+# Part 4: Filter with groups
+
+---
 
 ## Example
 
@@ -224,7 +231,7 @@ scores %>%
 
 ## Q1
 
-**Question:** Filter to the gender with a mean math score of 4.   
+**Question:** Filter to the sex with a mean math score of 4.   
 
 ```{r}
 
@@ -240,7 +247,9 @@ scores %>%
 
 **Answer:** 
 
-# Mutate
+# Part 5: Mutate
+
+---
 
 ## Example
 
@@ -284,16 +293,18 @@ scores %>%
 
 ```
 
-# Mutate with groups
+# Part 6: Mutate with groups
+
+---
 
 ## Q1
 
-**Question:** Mike and cindy both got a 4 for their math score. Explain why why Mike has a higher "math_score_centered_by_gender" score.
+**Question:** Mike and cindy both got a 4 for their math score. Explain why why Mike has a higher "math_score_centered_by_sex" score.
 
 ```{r}
 scores %>% 
-  group_by(gender) %>% 
-  mutate(math_score_centered_by_gender = math_score - mean(math_score))
+  group_by(sex) %>% 
+  mutate(math_score_centered_by_sex = math_score - mean(math_score))
 ```
 
 **Answer:** 
@@ -316,7 +327,9 @@ scores %>%
 
 ```
 
-# Summarize
+# Part 7: Summarize
+
+---
 
 ## Example
 
@@ -353,7 +366,9 @@ scores %>%
 
 **Answer:** We need another ")" at the end of the code. The first ")" is for the min function but we also need a ")" to end the summarize function. Rstudio helps because if you go to the right of a paranthese, it highlights the corresponding closing paranthese. 
 
-# Summarize with groups
+# Part 8: Summarize with groups
+
+---
 
 ## Example
 
@@ -375,7 +390,7 @@ scores %>%
 
 ## Q2
 
-**Question:** If we grouped by gender, and then summarized with the minimum reading score, how many rows would the resulting data frame have?
+**Question:** If we grouped by sex, and then summarized with the minimum reading score, how many rows would the resulting data frame have?
 
 **Answer:** 
 
@@ -391,13 +406,15 @@ scores %>%
 
 ## Q4 
 
-**Question:** Create a data frame with the mean and median reading score by gender, as well as the number of students of that gender.
+**Question:** Create a data frame with the mean and median reading score by sex, as well as the number of students of that sex.
 
 ```{r}
 
 ```
 
-# Combining verbs
+# Part 9: Combining verbs
+
+---
 
 ## Example
 
@@ -420,7 +437,7 @@ scores %>%
 
 ## Q2 
 
-**Question:** Remove any students with smith as a teacher, then find the mean math_score by gender.
+**Question:** Remove any students with smith as a teacher, then find the mean math_score by sex.
 
 ```{r}
 

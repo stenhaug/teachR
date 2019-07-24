@@ -1,0 +1,210 @@
+---
+title: "Article: Just enough ggplot"
+author: Ben Stenhaug
+output: 
+  html_document:
+    toc: true
+    toc_depth: 1
+    toc_float: true
+    theme: default
+    highlight: default
+---
+
+# Getting started
+
+```{r message = FALSE}
+library(tidyverse)
+```
+
+This website — https://ggplot2.tidyverse.org/reference/ — is incredibly useful. We'll focus on the most basic building blocks. Let's build a couple of data frames to use:
+
+```{r}
+scores <- 
+  tibble(
+    name = c("mike", "carol", "greg", "marcia", "peter", "jan", "bobby", "cindy", "alice"),
+    school = c("south", "south", "south", "south", "north", "north", "north", "south", "south"),
+    teacher = c("johnson", "johnson", "johnson", "johnson",  "smith", "smith", "smith", "perry", "perry"),
+    math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
+    reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)
+  )
+
+random_numbers <- 
+    tibble(
+        binom = rbinom(1000, 10, 0.5),
+        pois = rpois(1000, 5)
+    ) %>% 
+    mutate(
+        mix = rnorm(1000, binom + pois, 5),
+        high_low = ifelse(mix > 10, "high", "low")
+    )
+```
+
+To get the basics down, I'll show an example using the `scores` dataset and then ask you to make a similar plot using the `random_numbers` dataset.
+
+# Plotting one variable
+
+## geom_histogram
+
+If your variable is continuous, you'll want to use `geom_histogram`:
+
+```{r}
+scores %>% 
+    ggplot(mapping = aes(x = math_score)) +
+    geom_histogram()
+```
+
+Make a histogram with the random numbers and play around with `geom_histogram` options:
+
+```{r}
+
+```
+
+## geom_bar
+
+If your variable is discrete, you'll want to use `geom_bar`:
+
+```{r}
+scores %>% 
+    ggplot(aes(x = teacher)) +
+    geom_bar()
+```
+
+Your turn with `geom_bar`:
+
+```{r}
+
+```
+
+# Plotting two variables 
+
+## geom_point
+
+It's most common to use a scatter plot with `geom_point`:
+
+```{r}
+scores %>% 
+    ggplot(aes(x = math_score, y = reading_score)) +
+    geom_point()
+```
+
+You don't have to use continuous variables!
+
+```{r}
+scores %>% 
+    ggplot(aes(x = math_score, y = name)) +
+    geom_point()
+```
+
+Your turn:
+
+```{r}
+
+```
+
+## geom_col
+
+Making a column for each "point" with `geom_col` can also be useful:
+
+```{r}
+scores %>% 
+    ggplot(aes(x = name, y = reading_score)) +
+    geom_col()
+```
+
+Your turn:
+
+```{r}
+
+```
+
+## geom_boxplot
+
+`geom_boxplot` is useful for plotting a discrete continuous variable:
+
+```{r}
+scores %>% 
+    ggplot(aes(x = school, y = math_score)) +
+    geom_boxplot()
+```
+
+Your turn:
+
+```{r}
+
+```
+
+## geom_smooth
+
+`geom_smooth` is a fancy geom but still just uses two variables:
+
+```{r}
+scores %>% 
+    ggplot(aes(x = reading_score, y = math_score)) +
+    geom_smooth(method = "lm")
+```
+
+You can have multiple geoms — in this case it's common to point points and a smoother both on a plot.
+
+Your turn:
+
+```{r}
+
+```
+
+# Adding a third variable
+
+There are a few ways:
+
+```{r}
+# color 
+scores %>% 
+    ggplot(aes(x = reading_score, y = math_score, color = school)) +
+    geom_point()
+
+# shape
+scores %>% 
+    ggplot(aes(x = reading_score, y = math_score, shape = school)) +
+    geom_point()
+
+# with a facet
+scores %>% 
+    ggplot(aes(x = reading_score, y = math_score)) +
+    geom_point() +
+    facet_wrap(~ school)
+```
+
+Your turn:
+
+```{r}
+
+```
+
+# Putting it all together
+
+Here's a crazy plot that uses many, many options that might be useful for reference:
+
+```{r}
+scores %>% 
+    ggplot(mapping = aes(x = math_score, y = reading_score, color = school)) +
+    geom_point(alpha = 0.4) +
+    scale_x_continuous(limits = c(0, 10)) +
+    scale_y_log10() +
+    geom_smooth(method = "lm", se = FALSE) +
+    facet_wrap(~ school, ncol = 1) +
+    labs(
+        x = "Math",
+        y = "Reading",
+        title = "Math and reading test scores by student",
+        subtitle = "Just for 8 students"
+    ) +
+    theme_bw(base_size = 8)
+
+# this is useful for a session: theme_set(theme_bw(base_size = 12))
+```
+
+Your turn to make a crazy plot:
+
+```{r}
+
+```
+

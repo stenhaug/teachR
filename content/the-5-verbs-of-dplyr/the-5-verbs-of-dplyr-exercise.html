@@ -68,8 +68,6 @@ overflow: auto;
 margin-left: 2%;
 position: fixed;
 border: 1px solid #ccc;
-webkit-border-radius: 6px;
-moz-border-radius: 6px;
 border-radius: 6px;
 }
 
@@ -97,9 +95,14 @@ font-size: 12px;
 .tocify-subheader .tocify-subheader {
 text-indent: 30px;
 }
-
 .tocify-subheader .tocify-subheader .tocify-subheader {
 text-indent: 40px;
+}
+.tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader {
+text-indent: 50px;
+}
+.tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader .tocify-subheader {
+text-indent: 60px;
 }
 
 .tocify .tocify-item > a, .tocify .nav-list .nav-header {
@@ -503,13 +506,13 @@ float: none;
 
           item.append($("<a/>", {
 
-            "text": self.text()
+            "html": self.html()
 
           }));
 
         } else {
 
-          item.text(self.text());
+          item.html(self.html());
 
         }
 
@@ -1326,9 +1329,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type="text/css">
 .main-container {
@@ -1353,21 +1354,82 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
 </style>
 
 
 
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
 <script>
 $(document).ready(function () {
   window.buildTabsets("TOC");
 });
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
 </script>
 
 <!-- code folding -->
-
 
 
 
@@ -1445,8 +1507,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -1455,6 +1515,16 @@ div.tocify {
 
 
 </style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
@@ -1473,7 +1543,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Exercise - The 5 verbs of dplyr</h1>
-<h4 class="author"><em>Ben Stenhaug</em></h4>
+<h4 class="author">Ben Stenhaug</h4>
 
 </div>
 
@@ -1485,18 +1555,18 @@ div.tocify {
 <pre class="r"><code>library(tidyverse)</code></pre>
 <p>Here’s the dataframe that we’ll analyze in this exercise:</p>
 <pre class="r"><code>scores &lt;- 
-  data_frame(
+  tibble(
     name = c(&quot;mike&quot;, &quot;carol&quot;, &quot;greg&quot;, &quot;marcia&quot;, &quot;peter&quot;, &quot;jan&quot;, &quot;bobby&quot;, &quot;cindy&quot;, &quot;alice&quot;),
     school = c(&quot;south&quot;, &quot;south&quot;, &quot;south&quot;, &quot;south&quot;, &quot;north&quot;, &quot;north&quot;, &quot;north&quot;, &quot;south&quot;, &quot;south&quot;),
     teacher = c(&quot;johnson&quot;, &quot;johnson&quot;, &quot;johnson&quot;, &quot;johnson&quot;,  &quot;smith&quot;, &quot;smith&quot;, &quot;smith&quot;, &quot;perry&quot;, &quot;perry&quot;),
-    gender = c(&quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;),
+    sex = c(&quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;),
     math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
     reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)
   )</code></pre>
 <p>Let’s first take a look at it:</p>
 <pre class="r"><code>scores</code></pre>
 <pre><code>## # A tibble: 9 x 6
-##   name   school teacher gender math_score reading_score
+##   name   school teacher sex    math_score reading_score
 ##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
 ## 1 mike   south  johnson male            4             1
 ## 2 carol  south  johnson female          3             5
@@ -1512,7 +1582,7 @@ div.tocify {
 scores %&gt;% 
   slice(1:3)</code></pre>
 <pre><code>## # A tibble: 3 x 6
-##   name  school teacher gender math_score reading_score
+##   name  school teacher sex    math_score reading_score
 ##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
 ## 1 mike  south  johnson male            4             1
 ## 2 carol south  johnson female          3             5
@@ -1521,10 +1591,10 @@ scores %&gt;%
 scores_small &lt;- scores %&gt;% 
   slice(1:3)
 
-# see what's in &quot;scores_small&quot;
+# see what&#39;s in &quot;scores_small&quot;
 scores_small</code></pre>
 <pre><code>## # A tibble: 3 x 6
-##   name  school teacher gender math_score reading_score
+##   name  school teacher sex    math_score reading_score
 ##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
 ## 1 mike  south  johnson male            4             1
 ## 2 carol south  johnson female          3             5
@@ -1532,15 +1602,16 @@ scores_small</code></pre>
 <p>In this exercise we’ll typically just print the results and not save them, but it’s an option if you want it!</p>
 <p>Now we can get to the exercise. Most sections will begin with an example for you to look at. When questions require a written answer, there will be an “Answer” line for you to complete.</p>
 </div>
-<div id="arrange" class="section level1">
-<h1>Arrange</h1>
+<div id="part-1-arrange" class="section level1">
+<h1>Part 1: Arrange</h1>
+<hr />
 <div id="example" class="section level2">
 <h2>Example</h2>
 <p><strong>Question:</strong> Sort the data by math_score from high to low. Who had the best math score?</p>
 <pre class="r"><code>scores %&gt;% 
   arrange(desc(math_score))</code></pre>
 <pre><code>## # A tibble: 9 x 6
-##   name   school teacher gender math_score reading_score
+##   name   school teacher sex    math_score reading_score
 ##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
 ## 1 bobby  north  smith   male            5             1
 ## 2 alice  south  perry   female          5             4
@@ -1559,16 +1630,17 @@ scores_small</code></pre>
 </div>
 <div id="q2" class="section level2">
 <h2>Q2</h2>
-<p><strong>Question:</strong> Sort the data by gender so females show up first. Which gender appears to have better reading scores?</p>
+<p><strong>Question:</strong> Sort the data by sex so females show up first. Which sex appears to have better reading scores?</p>
 <p><strong>Answer:</strong></p>
 </div>
 <div id="q3" class="section level2">
 <h2>Q3</h2>
-<p><strong>Question:</strong> Sort the data by school, then teacher, then gender, then math_score, and finally by reading_score.</p>
+<p><strong>Question:</strong> Sort the data by school, then teacher, then sex, then math_score, and finally by reading_score.</p>
 </div>
 </div>
-<div id="select" class="section level1">
-<h1>Select</h1>
+<div id="part-2-select" class="section level1">
+<h1>Part 2: Select</h1>
+<hr />
 <div id="example-1" class="section level2">
 <h2>Example</h2>
 <p><strong>Question:</strong> Select only the name, math_score, and reading_score columns.</p>
@@ -1589,7 +1661,7 @@ scores_small</code></pre>
 </div>
 <div id="q1-1" class="section level2">
 <h2>Q1</h2>
-<p><strong>Question:</strong> Select all of the columns except the gender column.</p>
+<p><strong>Question:</strong> Select all of the columns except the sex column.</p>
 </div>
 <div id="q2-1" class="section level2">
 <h2>Q2</h2>
@@ -1597,30 +1669,31 @@ scores_small</code></pre>
 </div>
 <div id="q3-1" class="section level2">
 <h2>Q3</h2>
-<p><strong>Question:</strong> Keep all of the columns but rearrange them so gender is the first column.</p>
+<p><strong>Question:</strong> Keep all of the columns but rearrange them so sex is the first column.</p>
 </div>
 </div>
-<div id="filter" class="section level1">
-<h1>Filter</h1>
+<div id="part-3-filter" class="section level1">
+<h1>Part 3: Filter</h1>
+<hr />
 <div id="example-2" class="section level2">
 <h2>Example</h2>
 <p><strong>Question:</strong> Filter to students who are male and went to south.</p>
 <pre class="r"><code># Option 1
 scores %&gt;% 
-  filter(gender == &quot;male&quot; &amp; school == &quot;south&quot;)</code></pre>
+  filter(sex == &quot;male&quot; &amp; school == &quot;south&quot;)</code></pre>
 <pre><code>## # A tibble: 2 x 6
-##   name  school teacher gender math_score reading_score
-##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
-## 1 mike  south  johnson male            4             1
-## 2 greg  south  johnson male            2             2</code></pre>
+##   name  school teacher sex   math_score reading_score
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt;         &lt;dbl&gt;
+## 1 mike  south  johnson male           4             1
+## 2 greg  south  johnson male           2             2</code></pre>
 <pre class="r"><code># Option 2
 scores %&gt;% 
-  filter(gender == &quot;male&quot;, school == &quot;south&quot;)</code></pre>
+  filter(sex == &quot;male&quot;, school == &quot;south&quot;)</code></pre>
 <pre><code>## # A tibble: 2 x 6
-##   name  school teacher gender math_score reading_score
-##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
-## 1 mike  south  johnson male            4             1
-## 2 greg  south  johnson male            2             2</code></pre>
+##   name  school teacher sex   math_score reading_score
+##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt;         &lt;dbl&gt;
+## 1 mike  south  johnson male           4             1
+## 2 greg  south  johnson male           2             2</code></pre>
 </div>
 <div id="q1-2" class="section level2">
 <h2>Q1</h2>
@@ -1637,11 +1710,14 @@ scores %&gt;%
 <pre class="r"><code># code block 1
 scores %&gt;% 
   filter(school == south)</code></pre>
-<pre><code>## Error in filter_impl(.data, quo): Evaluation error: object 'south' not found.</code></pre>
+<pre><code>## Error: object &#39;south&#39; not found</code></pre>
 <pre class="r"><code># code block 2
 scores %&gt;% 
   filter(school = &quot;south&quot;)</code></pre>
-<pre><code>## Error: `school` (`school = &quot;south&quot;`) must not be named, do you need `==`?</code></pre>
+<pre><code>## Warning: `rlang__backtrace_on_error` is no longer experimental.
+## It has been renamed to `rlang_backtrace_on_error`. Please update your RProfile.
+## This warning is displayed once per session.</code></pre>
+<pre><code>## `school` (`school = &quot;south&quot;`) must not be named, do you need `==`?</code></pre>
 <pre class="r"><code># fix it! </code></pre>
 <p><strong>Answer:</strong></p>
 </div>
@@ -1658,8 +1734,9 @@ scores %&gt;%
 <p><strong>Question:</strong> Filter to students who have a name that starts with an “m”. Hint: type “?substr” in the console and then scroll to the bottom of the help file to see useful examples.</p>
 </div>
 </div>
-<div id="filter-with-groups" class="section level1">
-<h1>Filter with groups</h1>
+<div id="part-4-filter-with-groups" class="section level1">
+<h1>Part 4: Filter with groups</h1>
+<hr />
 <div id="example-3" class="section level2">
 <h2>Example</h2>
 <p><strong>Question:</strong> Filter to teachers whose best math student got a score of 5.</p>
@@ -1668,7 +1745,7 @@ scores %&gt;%
   filter(max(math_score) == 5)</code></pre>
 <pre><code>## # A tibble: 5 x 6
 ## # Groups:   teacher [2]
-##   name  school teacher gender math_score reading_score
+##   name  school teacher sex    math_score reading_score
 ##   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
 ## 1 peter north  smith   male            3             5
 ## 2 jan   north  smith   female          4             4
@@ -1678,7 +1755,7 @@ scores %&gt;%
 </div>
 <div id="q1-3" class="section level2">
 <h2>Q1</h2>
-<p><strong>Question:</strong> Filter to the gender with a mean math score of 4.</p>
+<p><strong>Question:</strong> Filter to the sex with a mean math score of 4.</p>
 </div>
 <div id="q2-3" class="section level2">
 <h2>Q2</h2>
@@ -1686,8 +1763,9 @@ scores %&gt;%
 <p><strong>Answer:</strong></p>
 </div>
 </div>
-<div id="mutate" class="section level1">
-<h1>Mutate</h1>
+<div id="part-5-mutate" class="section level1">
+<h1>Part 5: Mutate</h1>
+<hr />
 <div id="example-4" class="section level2">
 <h2>Example</h2>
 <p><strong>Question:</strong> Both the math and reading scores were actually out of 50 – replace both variables to be 10 times their original values.</p>
@@ -1695,7 +1773,7 @@ scores %&gt;%
   mutate(math_score =  math_score * 10,
          reading_score = reading_score * 10)</code></pre>
 <pre><code>## # A tibble: 9 x 6
-##   name   school teacher gender math_score reading_score
+##   name   school teacher sex    math_score reading_score
 ##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;
 ## 1 mike   south  johnson male           40            10
 ## 2 carol  south  johnson female         30            50
@@ -1724,27 +1802,28 @@ scores %&gt;%
 <p><strong>Question:</strong> Create a new column “science_score”. You can make up what the actual scores are!</p>
 </div>
 </div>
-<div id="mutate-with-groups" class="section level1">
-<h1>Mutate with groups</h1>
+<div id="part-6-mutate-with-groups" class="section level1">
+<h1>Part 6: Mutate with groups</h1>
+<hr />
 <div id="q1-5" class="section level2">
 <h2>Q1</h2>
-<p><strong>Question:</strong> Mike and cindy both got a 4 for their math score. Explain why why Mike has a higher “math_score_centered_by_gender” score.</p>
+<p><strong>Question:</strong> Mike and cindy both got a 4 for their math score. Explain why why Mike has a higher “math_score_centered_by_sex” score.</p>
 <pre class="r"><code>scores %&gt;% 
-  group_by(gender) %&gt;% 
-  mutate(math_score_centered_by_gender = math_score - mean(math_score))</code></pre>
+  group_by(sex) %&gt;% 
+  mutate(math_score_centered_by_sex = math_score - mean(math_score))</code></pre>
 <pre><code>## # A tibble: 9 x 7
-## # Groups:   gender [2]
-##   name   school teacher gender math_score reading_score math_score_center…
-##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;         &lt;dbl&gt;              &lt;dbl&gt;
-## 1 mike   south  johnson male            4             1                0.5
-## 2 carol  south  johnson female          3             5               -1  
-## 3 greg   south  johnson male            2             2               -1.5
-## 4 marcia south  johnson female          4             4                0  
-## 5 peter  north  smith   male            3             5               -0.5
-## 6 jan    north  smith   female          4             4                0  
-## 7 bobby  north  smith   male            5             1                1.5
-## 8 cindy  south  perry   female          4             5                0  
-## 9 alice  south  perry   female          5             4                1</code></pre>
+## # Groups:   sex [2]
+##   name   school teacher sex   math_score reading_score math_score_centered…
+##   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt;         &lt;dbl&gt;                &lt;dbl&gt;
+## 1 mike   south  johnson male           4             1                  0.5
+## 2 carol  south  johnson fema…          3             5                 -1  
+## 3 greg   south  johnson male           2             2                 -1.5
+## 4 marcia south  johnson fema…          4             4                  0  
+## 5 peter  north  smith   male           3             5                 -0.5
+## 6 jan    north  smith   fema…          4             4                  0  
+## 7 bobby  north  smith   male           5             1                  1.5
+## 8 cindy  south  perry   fema…          4             5                  0  
+## 9 alice  south  perry   fema…          5             4                  1</code></pre>
 <p><strong>Answer:</strong></p>
 </div>
 <div id="q2-5" class="section level2">
@@ -1757,8 +1836,9 @@ scores %&gt;%
 <p><strong>Question:</strong> Make a “number_of_students_in_class” column that is number of students in a student’s class. For example, it should be 4 for mike and 3 for peter.</p>
 </div>
 </div>
-<div id="summarize" class="section level1">
-<h1>Summarize</h1>
+<div id="part-7-summarize" class="section level1">
+<h1>Part 7: Summarize</h1>
+<hr />
 <div id="example-5" class="section level2">
 <h2>Example</h2>
 <p><strong>Question:</strong> Use the summarize command to find the mean math score for all students.</p>
@@ -1783,8 +1863,9 @@ scores %&gt;%
 <p><strong>Answer:</strong> We need another “)” at the end of the code. The first “)” is for the min function but we also need a “)” to end the summarize function. Rstudio helps because if you go to the right of a paranthese, it highlights the corresponding closing paranthese.</p>
 </div>
 </div>
-<div id="summarize-with-groups" class="section level1">
-<h1>Summarize with groups</h1>
+<div id="part-8-summarize-with-groups" class="section level1">
+<h1>Part 8: Summarize with groups</h1>
+<hr />
 <div id="example-6" class="section level2">
 <h2>Example</h2>
 <p><strong>Question:</strong> Find the minimum math score for each school.</p>
@@ -1803,7 +1884,7 @@ scores %&gt;%
 </div>
 <div id="q2-7" class="section level2">
 <h2>Q2</h2>
-<p><strong>Question:</strong> If we grouped by gender, and then summarized with the minimum reading score, how many rows would the resulting data frame have?</p>
+<p><strong>Question:</strong> If we grouped by sex, and then summarized with the minimum reading score, how many rows would the resulting data frame have?</p>
 <p><strong>Answer:</strong></p>
 </div>
 <div id="q3-6" class="section level2">
@@ -1813,11 +1894,12 @@ scores %&gt;%
 </div>
 <div id="q4-2" class="section level2">
 <h2>Q4</h2>
-<p><strong>Question:</strong> Create a data frame with the mean and median reading score by gender, as well as the number of students of that gender.</p>
+<p><strong>Question:</strong> Create a data frame with the mean and median reading score by sex, as well as the number of students of that sex.</p>
 </div>
 </div>
-<div id="combining-verbs" class="section level1">
-<h1>Combining verbs</h1>
+<div id="part-9-combining-verbs" class="section level1">
+<h1>Part 9: Combining verbs</h1>
+<hr />
 <div id="example-7" class="section level2">
 <h2>Example</h2>
 <p><strong>Question:</strong> Select just the name and math_score columns. Then create a new column “math_score_ec” that is a students math score plus 5 extra credit points. Finally, arrange the data frame by math_score_ec from low to high.</p>
@@ -1844,7 +1926,7 @@ scores %&gt;%
 </div>
 <div id="q2-8" class="section level2">
 <h2>Q2</h2>
-<p><strong>Question:</strong> Remove any students with smith as a teacher, then find the mean math_score by gender.</p>
+<p><strong>Question:</strong> Remove any students with smith as a teacher, then find the mean math_score by sex.</p>
 </div>
 <div id="q3-7" class="section level2">
 <h2>Q3</h2>
@@ -1878,7 +1960,7 @@ scores %&gt;%
 </div>
 <div id="challenge-1" class="section level2">
 <h2>Challenge</h2>
-<p>Play around with these tools. Write a question or two that you think best exposes a misunderstanding you had or drills down on an important thing to remember. I’d love to add these questions in the future! Feel free to email what you came up with to <a href="mailto:stenhaug@stanford.edu">stenhaug@stanford.edu</a>.</p>
+<p>Play around with these tools. Write a question or two that you think best exposes a misunderstanding you had or drills down on an important thing to remember. I’d love to add these questions in the future! Feel free to email what you came up with to <a href="mailto:stenhaug@stanford.edu" class="email">stenhaug@stanford.edu</a>.</p>
 </div>
 </div>
 

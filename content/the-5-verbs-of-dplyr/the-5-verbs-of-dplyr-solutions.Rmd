@@ -28,7 +28,7 @@ scores <-
   name = c("mike", "carol", "greg", "marcia", "peter", "jan", "bobby", "cindy", "alice"),
   school = c("south", "south", "south", "south", "north", "north", "north", "south", "south"),
   teacher = c("johnson", "johnson", "johnson", "johnson",  "smith", "smith", "smith", "perry", "perry"),
-  gender = c("male", "female", "male", "female", "male", "female", "male", "female", "female"),
+  sex = c("male", "female", "male", "female", "male", "female", "male", "female", "female"),
   math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
   reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)
   )
@@ -83,22 +83,22 @@ scores %>%
 
 ## Q2
 
-**Question:** Sort the data by gender so females show up first. Which gender appears to have better reading scores?   
+**Question:** Sort the data by sex so females show up first. Which sex appears to have better reading scores?   
 
 ```{r}
 scores %>% 
-  arrange(gender)
+  arrange(sex)
 ```
 
 **Answer:** Females seem to have better reading scores -- they all got either 4 or 5.
 
 ## Q3
 
-**Question:** Sort the data by school, then teacher, then gender, then math_score, and finally by reading_score. 
+**Question:** Sort the data by school, then teacher, then sex, then math_score, and finally by reading_score. 
 
 ```{r}
 scores %>% 
-  arrange(school, teacher, gender, math_score, reading_score)
+  arrange(school, teacher, sex, math_score, reading_score)
 ```
 
 # Select
@@ -114,11 +114,11 @@ scores %>%
 
 ## Q1 
 
-**Question:** Select all of the columns except the gender column.  
+**Question:** Select all of the columns except the sex column.  
 
 ```{r}
 scores %>% 
-  select(-gender)
+  select(-sex)
 ```
 
 ## Q2 
@@ -132,11 +132,11 @@ scores %>%
 
 ## Q3 
 
-**Question:** Keep all of the columns but rearrange them so gender is the first column.
+**Question:** Keep all of the columns but rearrange them so sex is the first column.
 
 ```{r}
 scores %>% 
-  select(gender, everything())
+  select(sex, everything())
 ```
 
 # Filter
@@ -148,11 +148,11 @@ scores %>%
 ```{r}
 # Option 1
 scores %>% 
-  filter(gender == "male" & school == "south")
+  filter(sex == "male" & school == "south")
 
 # Option 2
 scores %>% 
-  filter(gender == "male", school == "south")
+  filter(sex == "male", school == "south")
 ```
 
 ## Q1
@@ -241,11 +241,11 @@ scores %>%
 
 ## Q1
 
-**Question:** Filter to the gender with a mean math score of 4.   
+**Question:** Filter to the sex with a mean math score of 4.   
 
 ```{r}
 scores %>% 
-  group_by(gender) %>% 
+  group_by(sex) %>% 
   filter(mean(math_score) == 4)
 ```
 
@@ -313,15 +313,15 @@ scores %>%
 
 ## Q1
 
-**Question:** Mike and cindy both got a 4 for their math score. Explain why why Mike has a higher "math_score_centered_by_gender" score.
+**Question:** Mike and cindy both got a 4 for their math score. Explain why why Mike has a higher "math_score_centered_by_sex" score.
 
 ```{r}
 scores %>% 
-  group_by(gender) %>% 
-  mutate(math_score_centered_by_gender = math_score - mean(math_score))
+  group_by(sex) %>% 
+  mutate(math_score_centered_by_sex = math_score - mean(math_score))
 ```
 
-**Answer:** We are subtracting the mean math score for that person's gender off of their score. Mike has a higher "math_score_centered_by_gender" because males did worse on average on math and so a small number is subtracted off of his score of 4.
+**Answer:** We are subtracting the mean math score for that person's sex off of their score. Mike has a higher "math_score_centered_by_sex" because males did worse on average on math and so a small number is subtracted off of his score of 4.
 
 ## Q2
 
@@ -414,13 +414,13 @@ scores %>%
 
 ## Q2
 
-**Question:** If we grouped by gender, and then summarized with the minimum reading score, how many rows would the resulting data frame have?
+**Question:** If we grouped by sex, and then summarized with the minimum reading score, how many rows would the resulting data frame have?
 
-**Answer:** There would be one for each group. Because there are two genders in the data frame, there would be two rows. See:
+**Answer:** There would be one for each group. Because there are two sexs in the data frame, there would be two rows. See:
 
 ```{r}
 scores %>% 
-  group_by(gender) %>% 
+  group_by(sex) %>% 
   summarize(min(reading_score)) # side note: notice what happens when we don't provide a variable name
 ```
 
@@ -438,11 +438,11 @@ scores %>%
 
 ## Q4 
 
-**Question:** Create a data frame with the mean and median reading score by gender, as well as the number of students of that gender.
+**Question:** Create a data frame with the mean and median reading score by sex, as well as the number of students of that sex.
 
 ```{r}
 scores %>% 
-  group_by(gender) %>% 
+  group_by(sex) %>% 
   summarize(
     mean_reading_score = mean(reading_score),
     median_reading_score = median(reading_score),
@@ -476,12 +476,12 @@ scores %>%
 
 ## Q2 
 
-**Question:** Remove any students with smith as a teacher, then find the mean math_score by gender.
+**Question:** Remove any students with smith as a teacher, then find the mean math_score by sex.
 
 ```{r}
 scores %>% 
   filter(teacher != "smith") %>% 
-  group_by(gender) %>% 
+  group_by(sex) %>% 
   summarize(mean_math_score = mean(math_score))
 ```
 
@@ -491,7 +491,7 @@ scores %>%
 
 ```{r}
 scores %>% 
-  filter(gender == "female", school == "south") %>% 
+  filter(sex == "female", school == "south") %>% 
   summarize(min_reading_score = min(reading_score),
             max_reading_score = max(reading_score),
             median_reading_score = median(reading_score))
