@@ -13,6 +13,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+# install.packages("tictoc")
 library(tictoc)
 ```
 
@@ -123,6 +124,7 @@ Speed:
 Human readability:
 
 ```{r}
+# install.packages("furrr")
 library(furrr)
 plan(multiprocess)
 
@@ -140,6 +142,7 @@ Speed:
 Human readability:
 
 ```{r}
+# install.packages("parallel")
 library(parallel)
 cl <- makeCluster(detectCores() - 1)
 
