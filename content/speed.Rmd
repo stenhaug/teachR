@@ -83,7 +83,7 @@ Human readability:
 
 ```{r}
 tic()
-apply(df, 2, median)
+ouput3 <- apply(df, 2, median)
 toc()
 ```
 
@@ -97,7 +97,7 @@ Human readability:
 
 ```{r}
 tic()
-output3 <- lapply(df, median)
+output4 <- lapply(df, median)
 toc()
 ```
 
@@ -111,7 +111,7 @@ Human readability:
 
 ```{r}
 tic()
-output4 <- df %>% map(median)
+output5 <- df %>% map(median)
 toc()
 ```
 
@@ -129,7 +129,7 @@ library(furrr)
 plan(multiprocess)
 
 tic()
-output5 <- df %>% future_map(median)
+output6 <- df %>% future_map(median)
 toc()
 ```
 
@@ -147,7 +147,7 @@ library(parallel)
 cl <- makeCluster(detectCores() - 1)
 
 tic()
-output6 <- 
+output7 <- 
     parLapply(
         cl, 
         df,
@@ -166,7 +166,7 @@ Human readability:
 
 ```{r}
 tic()
-output7 <- df %>% summarize_all(median)
+output8 <- df %>% summarize_all(median)
 toc()
 ```
 
