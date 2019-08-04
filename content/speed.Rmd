@@ -175,3 +175,9 @@ toc()
 What are the factors that impact how fast R code is?
 
 What are the factors that impact how human readable R code is?
+
+# Learning more
+
+- https://r4ds.had.co.nz/iteration.html
+
+- https://www.r-bloggers.com/how-to-go-parallel-in-r-basics-tips/
