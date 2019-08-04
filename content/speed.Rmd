@@ -1,0 +1,174 @@
+---
+title: "Exercise: Speed"
+author: Ben Stenhaug
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    theme: default
+    highlight: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(tictoc)
+```
+
+Create data
+
+```{r}
+n_cols <- 100000
+
+df <- 
+    rerun(n_cols, rnorm(10)) %>% 
+    as_tibble(.name_repair = "universal")
+```
+
+An example of telling time
+
+```{r}
+tic()
+median(df$`1`)
+toc()
+```
+
+# Many ways to calculate the median of each column
+
+For each way, describe what the code is doing, grade the speed, and grade the human readability.
+
+## Way 1
+
+What's the code doing?
+
+Speed:
+
+Human readability:
+
+```{r}
+tic()
+output1 <- vector("double", 0)
+for (i in seq_along(df)) {
+    output1 <- c(output1, median(df[[i]]))
+}
+toc()
+```
+
+## Way 2
+
+What's the code doing?
+
+Speed:
+
+Human readability:
+
+```{r}
+tic()
+output2 <- vector("double", ncol(df))
+for (i in seq_along(df)) {
+    output2[[i]] <- median(df[[i]])
+    }
+toc()
+```
+
+## Way 3
+
+What's the code doing?
+
+Speed:
+
+Human readability:
+
+```{r}
+tic()
+apply(df, 2, median)
+toc()
+```
+
+## Way 4
+
+What's the code doing?
+
+Speed:
+
+Human readability:
+
+```{r}
+tic()
+output3 <- lapply(df, median)
+toc()
+```
+
+## Way 5
+
+What's the code doing?
+
+Speed:
+
+Human readability:
+
+```{r}
+tic()
+output4 <- df %>% map(median)
+toc()
+```
+
+## Way 6
+
+What's the code doing?
+
+Speed:
+
+Human readability:
+
+```{r}
+library(furrr)
+plan(multiprocess)
+
+tic()
+output5 <- df %>% future_map(median)
+toc()
+```
+
+## Way 7
+
+What's the code doing?
+
+Speed:
+
+Human readability:
+
+```{r}
+library(parallel)
+cl <- makeCluster(detectCores() - 1)
+
+tic()
+output6 <- 
+    parLapply(
+        cl, 
+        df,
+        median
+    )
+toc()
+```
+
+## Way 8
+
+What's the code doing?
+
+Speed:
+
+Human readability:
+
+```{r}
+tic()
+output7 <- df %>% summarize_all(median)
+toc()
+```
+
+# Summarize
+
+What are the factors that impact how fast R code is?
+
+What are the factors that impact how human readable R code is?

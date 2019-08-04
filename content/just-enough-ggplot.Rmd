@@ -14,6 +14,8 @@ output:
 
 ```{r message = FALSE}
 library(tidyverse)
+theme_set(theme_bw(base_size = 12))
+set.seed(1)
 ```
 
 This website — https://ggplot2.tidyverse.org/reference/ — is incredibly useful. We'll focus on the most basic building blocks. Let's build a couple of data frames to use:
@@ -49,14 +51,18 @@ If your variable is continuous, you'll want to use `geom_histogram`:
 
 ```{r}
 scores %>% 
-    ggplot(mapping = aes(x = math_score)) +
-    geom_histogram()
+    ggplot(aes(x = math_score)) +
+    geom_histogram(binwidth = 2)
+
+?geom_histogram
 ```
 
 Make a histogram with the random numbers and play around with `geom_histogram` options:
 
 ```{r}
-
+random_numbers %>% 
+  ggplot(aes(x = binom)) +
+  geom_histogram(bins = 20)
 ```
 
 ## geom_bar
@@ -72,7 +78,10 @@ scores %>%
 Your turn with `geom_bar`:
 
 ```{r}
-
+random_numbers %>% 
+  ggplot(aes(x = high_low)) +
+  geom_bar() +
+  coord_flip()
 ```
 
 # Plotting two variables 
@@ -108,7 +117,8 @@ Making a column for each "point" with `geom_col` can also be useful:
 ```{r}
 scores %>% 
     ggplot(aes(x = name, y = reading_score)) +
-    geom_col()
+    geom_col() +
+    geom_point(color = "red")
 ```
 
 Your turn:
@@ -138,9 +148,7 @@ Your turn:
 `geom_smooth` is a fancy geom but still just uses two variables:
 
 ```{r}
-scores %>% 
-    ggplot(aes(x = reading_score, y = math_score)) +
-    geom_smooth(method = "lm")
+scores %>% ggplot(aes(x = reading_score, y = math_score)) + geom_smooth(method = "lm", se = FALSE)  + geom_point()
 ```
 
 You can have multiple geoms — in this case it's common to point points and a smoother both on a plot.
@@ -185,7 +193,8 @@ Here's a crazy plot that uses many, many options that might be useful for refere
 
 ```{r}
 scores %>% 
-    ggplot(mapping = aes(x = math_score, y = reading_score, color = school)) +
+    ggplot(mapping = 
+             aes(x = math_score, y = reading_score, color = school)) +
     geom_point(alpha = 0.4) +
     scale_x_continuous(limits = c(0, 10)) +
     scale_y_log10() +
@@ -197,7 +206,7 @@ scores %>%
         title = "Math and reading test scores by student",
         subtitle = "Just for 8 students"
     ) +
-    theme_bw(base_size = 8)
+    theme_gray(base_size = 2)
 
 # this is useful for a session: theme_set(theme_bw(base_size = 12))
 ```
