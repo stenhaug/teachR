@@ -12,6 +12,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+# install.packages("profvis")
 library(tidyverse)
 # install.packages("tictoc")
 library(tictoc)
