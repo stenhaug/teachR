@@ -206,7 +206,7 @@ scores %>%
         title = "Math and reading test scores by student",
         subtitle = "Just for 8 students"
     ) +
-    theme_gray(base_size = 2)
+    theme_gray(base_size = 18)
 
 # this is useful for a session: theme_set(theme_bw(base_size = 12))
 ```
