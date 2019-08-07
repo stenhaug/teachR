@@ -44,6 +44,10 @@ get_recall_top_n <- function(n, data){
 use those functions to calculate
 
 ```{r}
+data <- data %>% 
+    mutate(outcome = 1 - outcome,
+           proba = 1 - proba)
+
 output_for_top_n <- 
     tibble(n = 0:nrow(data)) %>% 
     mutate(
@@ -74,6 +78,7 @@ data_perfect <-
     tibble(proba = runif(1000)) %>% 
     mutate(outcome = as.integer(proba > 0.2)) %>% 
     select(outcome, proba)
+
 tibble(n = 0:nrow(data_perfect)) %>% 
     mutate(
         accuracy = n %>% map_dbl(get_accuracy_top_n, data_perfect),
