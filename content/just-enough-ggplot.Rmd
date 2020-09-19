@@ -13,8 +13,6 @@ output:
 # Getting started
 
 ```{r message = FALSE}
-# WHAT UP D SMITH
-
 library(tidyverse)
 theme_set(theme_bw(base_size = 12))
 set.seed(1)
